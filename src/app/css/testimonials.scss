@@ -1,0 +1,26 @@
+/* Testimonials Section */
+.testimonials-section {
+  padding: 3rem 0;
+  background-color: #f8f9fa;
+}
+
+.testimonials-section h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.testimonials-section blockquote {
+  font-style: italic;
+  color: #6e7687;
+  padding-left: 1rem;
+  border-left: 2px solid rgba(0, 40, 100, 0.12);
+}
+
+.testimonials-section blockquote p {
+  margin-bottom: 1rem;
+}
+
+.testimonials-section .blockquote-footer {
+  font-size: 80%;
+  color: #9aa0ac;
+}

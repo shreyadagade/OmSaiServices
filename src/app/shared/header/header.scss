@@ -1,0 +1,21 @@
+/* Header */
+.home-header {
+  background-color: #ffffff;
+}
+
+.home-header .header-brand {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 2rem;
+  text-decoration: none;
+}
+
+.home-header .header-brand-img {
+  height: 3rem;
+  width: auto;
+  object-fit: contain;
+  margin-right: 0.5rem;
+}
