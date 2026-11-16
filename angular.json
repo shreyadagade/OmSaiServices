@@ -55,18 +55,23 @@
           },
           "defaultConfiguration": "production"
         },
-        "serve": {
-          "builder": "@angular/build:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "om-sai-services:build:production"
-            },
-            "development": {
-              "buildTarget": "om-sai-services:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
+        
+"serve": {
+  "builder": "@angular/build:dev-server",
+  "options": {
+    "proxyConfig": "proxy.conf.json"
+  },
+  "configurations": {
+    "production": {
+      "buildTarget": "om-sai-services:build:production"
+    },
+    "development": {
+      "buildTarget": "om-sai-services:build:development"
+    }
+  },
+  "defaultConfiguration": "development"
+},
+
         "test": {
           "builder": "@angular/build:unit-test"
         }

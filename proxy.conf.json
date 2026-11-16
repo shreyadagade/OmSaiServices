@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://user.omsaiservices.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
