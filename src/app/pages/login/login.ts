@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../../core/services/auth.service';
 import { LoginRequest } from '../../core/models/login-request.model';
@@ -27,7 +28,7 @@ export class Login {
   successMessage: string = '';
   isLoading: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,private router: Router) {}
 
   onSubmit(): void {
 
@@ -77,7 +78,7 @@ export class Login {
 
         this.successMessage = 'Login successful!';
 
-        console.log('Login successful');
+        this.router.navigate(['/dashboard']);
       },
 
       error: (error) => {
