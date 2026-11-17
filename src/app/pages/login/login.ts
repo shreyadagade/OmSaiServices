@@ -1,9 +1,9 @@
 
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { Router } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
+import { finalize } from 'rxjs';
 
 import { AuthService } from '../../core/services/auth.service';
 import { LoginRequest } from '../../core/models/login-request.model';
@@ -28,7 +28,11 @@ export class Login {
   successMessage: string = '';
   isLoading: boolean = false;
 
-  constructor(private authService: AuthService,private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   onSubmit(): void {
 
@@ -59,45 +63,58 @@ export class Login {
 
     this.isLoading = true;
 
-    this.authService.login(loginRequest).subscribe({
+    this.authService.login(loginRequest)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        })
+      )
+      .subscribe({
 
-      next: (response: LoginResponse) => {
+        next: (response: LoginResponse) => {
 
-        this.isLoading = false;
+          if (!response?.token) {
+            this.errorMessage =
+              'Login failed. Authentication token not received.';
+            this.cdr.detectChanges();
+            return;
+          }
 
-        if (!response?.token) {
-          this.errorMessage = 'Login failed. Authentication token not received.';
-          return;
+          sessionStorage.setItem('authToken', response.token);
+          sessionStorage.setItem('userId', response.userId);
+          sessionStorage.setItem('userName', response.userName);
+          sessionStorage.setItem('userEmail', response.email);
+          sessionStorage.setItem(
+            'userRoles',
+            JSON.stringify(response.roles)
+          );
+
+          this.successMessage = 'Login successful!';
+
+          this.router.navigate(['/dashboard']);
+        },
+
+        error: (error) => {
+
+          if (error.status === 401) {
+            this.errorMessage = 'Invalid email or password.';
+          }
+          else if (error.status === 0) {
+            this.errorMessage =
+              'Unable to connect to server. Please try again.';
+          }
+          else {
+            this.errorMessage =
+              error.error?.message ||
+              'Login failed. Please try again.';
+          }
+
+          console.error('Login error:', error);
+
+          this.cdr.detectChanges();
         }
 
-        sessionStorage.setItem('authToken', response.token);
-        sessionStorage.setItem('userId', response.userId);
-        sessionStorage.setItem('userName', response.userName);
-        sessionStorage.setItem('userEmail', response.email);
-        sessionStorage.setItem('userRoles', JSON.stringify(response.roles));
-
-        this.successMessage = 'Login successful!';
-
-        this.router.navigate(['/dashboard']);
-      },
-
-      error: (error) => {
-
-        this.isLoading = false;
-
-        if (error.status === 401) {
-          this.errorMessage = 'Invalid email or password.';
-        }
-        else if (error.status === 0) {
-          this.errorMessage = 'Unable to connect to server. Please check CORS configuration.';
-        }
-        else {
-          this.errorMessage =
-            error.error?.message || 'Login failed. Please try again.';
-        }
-
-        console.error('Login error:', error);
-      }
-    });
+      });
   }
 }

@@ -1,18 +1,6 @@
 
 <div class="login-page">
 
-  <!-- HEADER -->
-  <header class="login-header">
-    <a routerLink="/" class="brand">
-      <img src="/images/logo.png" alt="Om Sai Services Logo">
-      <span>Om Sai Services</span>
-    </a>
-
-    <a routerLink="/" class="home-link">
-      <span>⌂</span> Home
-    </a>
-  </header>
-
   <!-- MAIN CONTENT -->
   <main class="login-main">
 
@@ -140,12 +128,15 @@
 
             <!-- ERROR MESSAGE -->
             @if (errorMessage) {
-              <!-- <div class="error-message" role="alert">
+              <div class="error-message" role="alert">
                 {{ errorMessage }}
-              </div> -->
+              </div>
+            }
 
-              <p *ngIf="successMessage" class="success-message">
-                  {{ successMessage }}
+            <!-- SUCCESS MESSAGE -->
+            @if (successMessage) {
+              <p class="success-message" role="status">
+                {{ successMessage }}
               </p>
             }
 
@@ -153,7 +144,7 @@
             <button
               type="submit"
               class="login-button"
-              [disabled]="isLoading">
+              [disabled]="isLoading || loginForm.invalid">
               {{ isLoading ? 'Signing in...' : 'Log In' }}
             </button>
 
@@ -166,10 +157,5 @@
     </div>
 
   </main>
-
-  <!-- FOOTER -->
-  <footer class="login-footer">
-    Copyright © 2026 Om Sai Services. All rights reserved.
-  </footer>
 
 </div>

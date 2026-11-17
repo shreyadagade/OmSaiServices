@@ -1,179 +1,227 @@
 
-
-
-
 <div class="dashboard-page">
 
   <!-- Today's Attendance Summary -->
   <section class="summary-section">
-    <h3>Todays Attendance Summary</h3>
+
+    <h3 class="summary-title">Todays Attendance Summary</h3>
 
     <div class="summary-grid">
+
+      <!-- Total Workers -->
       <div class="summary-card">
-        <div class="card-body">
-          <div class="card-value text-blue">{{ today.totalPercent }}%</div>
-          <h3>{{ today.total }}</h3>
-          <div class="text-muted">Total Workers</div>
+        <div class="summary-content">
+          <div class="summary-number">631</div>
+          <div class="summary-label">Total<br>Workers</div>
+          <div class="summary-percent blue">100%</div>
         </div>
-        <div class="mini-chart">
+
+        <div class="attendance-chart blue-chart">
           <svg viewBox="0 0 300 65" preserveAspectRatio="none">
-            <polyline
-              [attr.points]="chartPoints(today.totalTrend)"
-              fill="none" stroke="#3498db" stroke-width="2.5" />
+            <polyline points="0,32 50,32 100,32 150,32 200,32 250,32 300,32"/>
+            <circle cx="50" cy="32" r="3"/>
+            <circle cx="100" cy="32" r="3"/>
+            <circle cx="150" cy="32" r="3"/>
+            <circle cx="200" cy="32" r="3"/>
+            <circle cx="250" cy="32" r="3"/>
           </svg>
         </div>
       </div>
 
+      <!-- Absent Workers -->
       <div class="summary-card">
-        <div class="card-body">
-          <div class="card-value text-red">{{ today.absentPercent }}%</div>
-          <h3>{{ today.absent }}</h3>
-          <div class="text-muted">Absent Workers</div>
+        <div class="summary-content">
+          <div class="summary-number">631</div>
+          <div class="summary-label">Absent<br>Workers</div>
+          <div class="summary-percent red">100%</div>
         </div>
-        <div class="mini-chart">
+
+        <div class="attendance-chart red-chart">
           <svg viewBox="0 0 300 65" preserveAspectRatio="none">
-            <polyline
-              [attr.points]="chartPoints(today.absentTrend)"
-              fill="none" stroke="#e74c3c" stroke-width="2.5" />
+            <polyline points="0,32 50,32 100,32 150,32 200,32 250,32 300,32"/>
+            <circle cx="50" cy="32" r="3"/>
+            <circle cx="100" cy="32" r="3"/>
+            <circle cx="150" cy="32" r="3"/>
+            <circle cx="200" cy="32" r="3"/>
+            <circle cx="250" cy="32" r="3"/>
           </svg>
         </div>
       </div>
 
+      <!-- Present Workers -->
       <div class="summary-card">
-        <div class="card-body">
-          <div class="card-value text-green">{{ today.presentPercent }}%</div>
-          <h3>{{ today.present }}</h3>
-          <div class="text-muted">Present Workers</div>
+        <div class="summary-content">
+          <div class="summary-number">0</div>
+          <div class="summary-label">Present Workers</div>
+          <div class="summary-percent green">0%</div>
         </div>
-        <div class="mini-chart">
+
+        <div class="attendance-chart green-chart">
           <svg viewBox="0 0 300 65" preserveAspectRatio="none">
-            <polyline
-              [attr.points]="chartPoints(today.presentTrend)"
-              fill="none" stroke="#2ecc71" stroke-width="2.5" />
+            <polyline points="0,5 50,5 100,65 150,5 200,65"/>
+            <circle cx="50" cy="5" r="3"/>
+            <circle cx="100" cy="65" r="3"/>
+            <circle cx="150" cy="5" r="3"/>
           </svg>
         </div>
       </div>
 
+      <!-- Live Workers -->
       <div class="summary-card">
-        <div class="card-body">
-          <div class="card-value text-yellow">{{ today.livePercent }}%</div>
-          <h3>{{ today.live }}</h3>
-          <div class="text-muted">Live Workers</div>
+        <div class="summary-content">
+          <div class="summary-number">0</div>
+          <div class="summary-label">Live Workers</div>
+          <div class="summary-percent yellow">0%</div>
         </div>
-        <div class="mini-chart">
+
+        <div class="attendance-chart yellow-chart">
           <svg viewBox="0 0 300 65" preserveAspectRatio="none">
-            <polyline
-              [attr.points]="chartPoints(today.liveTrend)"
-              fill="none" stroke="#f39c12" stroke-width="2.5" />
+            <polyline points="0,65 100,65 150,45 200,5 250,65"/>
+            <circle cx="200" cy="5" r="3"/>
           </svg>
         </div>
       </div>
+
     </div>
   </section>
+
 
   <!-- Yesterday's Attendance Summary -->
-  <section class="summary-section">
-    <h3>Yesterdays Attendance Summary</h3>
+  <section class="summary-section yesterday-section">
+
+    <h3 class="summary-title">Yesterdays Attendance Summary</h3>
 
     <div class="summary-grid">
+
+      <!-- Total Workers -->
       <div class="summary-card">
-        <div class="card-body">
-          <div class="card-value text-blue">{{ yesterday.totalPercent }}%</div>
-          <h3>{{ yesterday.total }}</h3>
-          <div class="text-muted">Total Workers</div>
+        <div class="summary-content">
+          <div class="summary-number">631</div>
+          <div class="summary-label">Total<br>Workers</div>
+          <div class="summary-percent blue">100%</div>
         </div>
       </div>
 
+      <!-- Absent Workers -->
       <div class="summary-card">
-        <div class="card-body">
-          <div class="card-value text-red">{{ yesterday.absentPercent }}%</div>
-          <h3>{{ yesterday.absent }}</h3>
-          <div class="text-muted">Absent Workers</div>
+        <div class="summary-content">
+          <div class="summary-number">628</div>
+          <div class="summary-label">Absent<br>Workers</div>
+          <div class="summary-percent red">100%</div>
         </div>
       </div>
 
+      <!-- Present Workers -->
       <div class="summary-card">
-        <div class="card-body">
-          <div class="card-value text-green">{{ yesterday.presentPercent }}%</div>
-          <h3>{{ yesterday.present }}</h3>
-          <div class="text-muted">Present Workers</div>
+        <div class="summary-content">
+          <div class="summary-number">0</div>
+          <div class="summary-label">Present Workers</div>
+          <div class="summary-percent green">0%</div>
         </div>
       </div>
 
+      <!-- Live Workers -->
       <div class="summary-card">
-        <div class="card-body">
-          <div class="card-value text-yellow">{{ yesterday.livePercent }}%</div>
-          <h3>{{ yesterday.live }}</h3>
-          <div class="text-muted">Live Workers</div>
+        <div class="summary-content">
+          <div class="summary-number">3</div>
+          <div class="summary-label">Live Workers</div>
+          <div class="summary-percent yellow">0%</div>
         </div>
       </div>
+
     </div>
   </section>
+
 
   <!-- Worker Attendance by Sites -->
   <section class="attendance-card">
 
     <div class="attendance-header">
-      <div class="attendance-title">
-        <h2>Worker Attendance by Sites</h2>
-      </div>
 
-      <div class="download-area">
-        <button class="download-btn" (click)="downloadReport()">
-          <span class="download-icon">⬇</span>
-          <b>Download</b>
+      <h2>Worker Attendance by Sites</h2>
+
+      <div class="attendance-actions">
+
+        <button type="button" class="download-btn">
+          <span class="fe fe-download"></span>
+          Download
         </button>
-      </div>
 
-      <div class="search-area">
         <input
           type="text"
-          [(ngModel)]="searchText"
           placeholder="Search Site"
-          class="search-input">
+          aria-label="Search Site"
+        >
+
       </div>
     </div>
 
-    <div class="table-wrapper">
-      <table class="attendance-table">
-        <thead>
-          <tr>
-            <th>Sites</th>
-            <th>Total Workers</th>
-            <th>Live</th>
-            <th>Absent</th>
-            <th>Week Off</th>
-            <th>Leave</th>
-            <th>Total Present</th>
-          </tr>
-        </thead>
 
-        <tbody>
-          <tr
-            *ngFor="let site of filteredSites"
-            [ngClass]="'row-' + getSiteStatus(site)">
+    <div class="attendance-body">
 
-            <td>{{ site.siteName }}</td>
-            <td>{{ site.totalWorkers }}</td>
-            <td>{{ site.liveWorkers }}</td>
-            <td>{{ site.absentWorkers }}</td>
-            <td>{{ site.weekOffWorkers }}</td>
-            <td>{{ site.leaveWorkers }}</td>
+      <div class="table-responsive">
 
-            <td>
-              <span
-                class="present-badge"
-                [ngClass]="'badge-' + getSiteStatus(site)">
-                {{ site.presentWorkers }}
-              </span>
-            </td>
-          </tr>
+        <table class="attendance-table">
 
-          <tr *ngIf="filteredSites.length === 0">
-            <td colspan="7" class="no-records">No records found</td>
-          </tr>
-        </tbody>
-      </table>
+          <thead>
+            <tr>
+              <th>Sites</th>
+              <th>Total Workers</th>
+              <th>Live</th>
+              <th>Absent</th>
+              <th>Week Off</th>
+              <th>Leave</th>
+              <th>Total Present</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr class="site-blue">
+              <td>Hadapsar Handewadi</td>
+              <td>120</td>
+              <td>5</td>
+              <td>110</td>
+              <td>3</td>
+              <td>2</td>
+              <td><span class="present-badge">5</span></td>
+            </tr>
+
+            <tr class="site-blue">
+              <td>Jaywant Banglo</td>
+              <td>85</td>
+              <td>3</td>
+              <td>78</td>
+              <td>2</td>
+              <td>1</td>
+              <td><span class="present-badge">4</span></td>
+            </tr>
+
+            <tr class="site-red">
+              <td>JAYWANT PLOTTING</td>
+              <td>150</td>
+              <td>0</td>
+              <td>145</td>
+              <td>3</td>
+              <td>2</td>
+              <td><span class="present-badge red-badge">0</span></td>
+            </tr>
+
+            <tr class="site-blue">
+              <td>Joy Ville</td>
+              <td>95</td>
+              <td>4</td>
+              <td>88</td>
+              <td>1</td>
+              <td>2</td>
+              <td><span class="present-badge">4</span></td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
     </div>
 
   </section>

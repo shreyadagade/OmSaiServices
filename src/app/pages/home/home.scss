@@ -304,20 +304,4 @@
   .footer-copyright {
     line-height: 1.7;
   }
-
-  .services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-  align-items: start;
-}
-
-.service-card {
-  align-self: start;
-  height: auto;
-}
-
-.service-content {
-  padding: 22px 20px 24px;
-}
 }

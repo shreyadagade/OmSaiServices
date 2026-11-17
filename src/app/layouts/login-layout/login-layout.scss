@@ -1,0 +1,131 @@
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100%;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.login-layout {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-layout .page-main {
+  flex: 1 0 auto;
+}
+
+/* Header */
+.login-layout .header {
+  width: 100%;
+}
+
+.login-layout .header-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.login-layout .header-brand-img {
+  height: 3rem;
+  width: auto;
+  margin-right: 10px;
+  object-fit: contain;
+}
+
+/* Desktop Navigation */
+.login-layout .desktop-navigation {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.login-layout .desktop-navigation .nav-link {
+  text-decoration: none;
+}
+
+/* Mobile Menu Button */
+.login-layout .header-toggler {
+  border: 0;
+  background: transparent;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.login-layout .header-toggler-icon {
+  display: block;
+  width: 24px;
+  height: 18px;
+  border-top: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  position: relative;
+}
+
+.login-layout .header-toggler-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 7px;
+  border-top: 2px solid currentColor;
+}
+
+/* Mobile Navigation */
+.login-layout .login-mobile-menu {
+  display: none;
+  width: 100%;
+  background: #fff;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.login-layout .login-mobile-menu.show {
+  display: block;
+}
+
+.login-layout .login-mobile-menu .nav-link {
+  display: block;
+  padding: 10px 15px;
+  color: #495057;
+  text-decoration: none;
+}
+
+.login-layout .login-mobile-menu .nav-link:hover {
+  color: #467fcf;
+  background: #f8f9fa;
+}
+
+/* Footer */
+.login-layout .footer {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+/* Responsive */
+@media (min-width: 992px) {
+  .login-layout .desktop-navigation {
+    display: flex;
+  }
+}
+
+@media (max-width: 991px) {
+  .login-layout .desktop-navigation {
+    display: none;
+  }
+}
+
+@media (max-width: 575px) {
+  .login-layout .header-brand {
+    font-size: 18px;
+  }
+
+  .login-layout .header-brand-img {
+    height: 2.5rem;
+  }
+
+  .login-layout .footer {
+    text-align: center;
+  }
+}
