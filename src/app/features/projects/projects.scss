@@ -1,0 +1,21 @@
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.table-responsive {
+  width: 100%;
+}
+
+.btn-delete {
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+}

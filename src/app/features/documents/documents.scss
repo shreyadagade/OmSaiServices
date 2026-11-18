@@ -1,0 +1,80 @@
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.table-responsive {
+  width: 100%;
+}
+
+.btnEdit,
+.btn-delete {
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+}
+
+.btnEdit:hover,
+.btn-delete:hover {
+  cursor: pointer;
+}
+
+.status-icon {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 5px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+#rightCard .card-footer {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.document-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.document-modal {
+  width: 100%;
+  max-width: 500px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+}
+
+.document-modal .modal-body {
+  padding: 2rem 1.5rem;
+}
+
+.document-modal h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.document-modal .btn {
+  margin: 0 4px;
+}
+
+@media (max-width: 767px) {
+  #rightCard {
+    margin-top: 15px;
+  }
+}

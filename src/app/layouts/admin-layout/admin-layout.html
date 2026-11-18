@@ -11,7 +11,7 @@
               src="/images/logo.png"
               class="header-brand-img"
               alt="Om Sai Services"
-            >
+            />
             Om Sai Services
           </a>
 
@@ -22,18 +22,17 @@
                 class="nav-link profile-button"
                 (click)="profileOpen = !profileOpen"
               >
-                <img
-                  src="/demo/faces/profile-picture.png"
-                  class="avatar"
-                  alt="Profile"
-                >
-                <span class="ml-2 d-none d-lg-block text-left">
-                  <span class="text-default">{{ userName }}</span>
-                  <small class="text-muted d-block mt-1">
-                    {{ userRoles.join(', ') }}
-                  </small>
-                </span>
-              </button>
+              <span class="avatar mr-3 align-self-center">
+              <i class="fe fe-user"></i>
+              </span>
+
+              <span class="ml-2 d-none d-lg-block text-left">
+                <span class="text-default">{{ userName }}</span>
+                <small class="text-muted d-block mt-1">
+                  {{ userRoles.join(', ') }}
+                </small>
+              </span>
+            </button>
 
               <div class="dropdown-menu dropdown-menu-right"
                    [class.show]="profileOpen">
@@ -83,7 +82,7 @@
               <i class="fe fe-chevron-down"></i>
             </button>
             <div class="dropdown-menu" [class.show]="activeDropdown === 'configuration'">
-              <a class="dropdown-item" href="#">Roles</a>
+             <a class="dropdown-item" routerLink="/admin/role">Roles</a>
               <a class="dropdown-item" href="#">Documents</a>
               <a class="dropdown-item" href="#">Departments</a>
               <a class="dropdown-item" href="#">Qualification</a>

@@ -113,46 +113,84 @@
   height: 100%;
 }
 
-.attendance-chart polyline {
-  fill: none;
-  stroke-width: 2;
-  vector-effect: non-scaling-stroke;
-}
-
-.attendance-chart circle {
-  stroke: none;
-}
+/* Blue Chart */
 
 .blue-chart {
   background: #eaf4fc;
 }
 
-.blue-chart polyline,
-.blue-chart circle {
+.blue-chart polyline {
+  fill: none;
   stroke: #2c9be8;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.blue-chart circle {
   fill: #2c9be8;
 }
+
+/* Red Chart */
 
 .red-chart {
   background: #fceeed;
 }
 
-.red-chart polyline,
-.red-chart circle {
+.red-chart polyline {
+  fill: none;
   stroke: #ff5748;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.red-chart circle {
   fill: #ff5748;
 }
 
-.green-chart polyline,
-.green-chart circle {
-  stroke: #00c875;
-  fill: #00c875;
+/* Green Present Workers Chart */
+
+.green-chart {
+  background: #fff;
 }
 
-.yellow-chart polyline,
-.yellow-chart circle {
-  stroke: #ff9700;
+.green-chart .chart-area {
+  fill: #00c875;
+  stroke: none;
+}
+
+.green-chart .chart-line {
+  fill: none;
+  stroke: #00c875;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.green-chart circle {
+  fill: #00c875;
+  stroke: none;
+}
+
+/* Yellow Live Workers Chart */
+
+.yellow-chart {
+  background: #fff;
+}
+
+.yellow-chart .chart-area {
   fill: #ff9700;
+  stroke: none;
+}
+
+.yellow-chart .chart-line {
+  fill: none;
+  stroke: #ff9700;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.yellow-chart circle {
+  fill: #ff9700;
+  stroke: none;
 }
 
 /* Yesterday Summary */

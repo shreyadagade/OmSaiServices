@@ -1,0 +1,42 @@
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.page-title {
+  margin-bottom: 0;
+}
+
+.custom-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.custom-control-input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.custom-control-label {
+  font-weight: 400;
+}
+
+.card-footer .card-footer {
+  border-top: 1px solid #dee2e6;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  padding-top: 16px;
+}
+
+@media (max-width: 767px) {
+  .col-lg-8 {
+    width: 100%;
+  }
+}

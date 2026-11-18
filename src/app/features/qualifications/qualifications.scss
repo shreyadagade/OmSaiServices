@@ -1,0 +1,43 @@
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.table-responsive {
+  width: 100%;
+}
+
+.btnEdit,
+.btn-delete {
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+}
+
+.status-icon {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 5px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+#rightCard .card-footer {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+@media (max-width: 767px) {
+  #rightCard {
+    margin-top: 15px;
+  }
+}

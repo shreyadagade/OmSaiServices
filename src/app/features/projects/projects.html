@@ -1,0 +1,87 @@
+
+<div class="app-content-header">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+        <h3 class="page-title">
+          Projects
+          <a
+            class="btn btn-sm btn-primary"
+            routerLink="/admin/project/create">
+            Add New
+          </a>
+        </h3>
+      </div>
+
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+          <li class="breadcrumb-item">
+            <a routerLink="/">Home</a>
+          </li>
+          <li class="breadcrumb-item active">Projects</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="app-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12" id="leftCard">
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table card-table table-vcenter text-nowrap">
+              <thead>
+                <tr>
+                  <th style="width: 10px">Sr No.</th>
+                  <th>Project Name</th>
+                  <th>Project Description</th>
+                  <th>Total Man Power</th>
+                  <th>Project Budget</th>
+                  <th>Status</th>
+                  <th>Project Start Date</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr
+                  *ngFor="let project of store.projects; let i = index"
+                  class="align-middle">
+                  <td>{{ project.projectId }}</td>
+                  <td>{{ project.projectName }}</td>
+                  <td>{{ project.projectDiscription }}</td>
+                  <td>{{ project.totalManPower }}</td>
+                  <td>{{ project.projectBudget }}</td>
+                  <td>{{ project.status }}</td>
+                  <td>
+                    {{ project.projectStartDate
+                      ? (project.projectStartDate | date:'dd-MMM-yyyy')
+                      : '' }}
+                  </td>
+                  <td>
+                    <nav class="nav justify-content-center flex-nowrap">
+                      <a
+                        class="nav-link badge shadow ml-1 text-warning btn"
+                        [routerLink]="['/admin/project/edit', project.projectId]">
+                        <i class="fe fe-edit"></i>
+                      </a>
+
+                      <button
+                        type="button"
+                        class="nav-link badge shadow m-0 text-danger btn btn-delete"
+                        (click)="deleteProject(project.projectId)">
+                        <i class="fe fe-trash"></i>
+                      </button>
+                    </nav>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

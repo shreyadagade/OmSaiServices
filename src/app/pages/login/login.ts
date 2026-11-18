@@ -92,7 +92,14 @@ export class Login {
 
           this.successMessage = 'Login successful!';
 
-          this.router.navigate(['/dashboard']);
+          this.router.navigateByUrl('/dashboard').then(
+          (success) => {
+          console.log('Dashboard navigation:', success);
+          },
+          (error) => {
+            console.error('Dashboard navigation error:', error);
+          }
+        );
         },
 
         error: (error) => {

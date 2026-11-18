@@ -1,0 +1,172 @@
+
+<div class="app-content-header">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+        <h3 class="mb-0 page-title">
+          Qualifications
+
+          <button
+            *ngIf="!showForm"
+            type="button"
+            class="btn btn-sm btn-primary"
+            (click)="openCreateForm()">
+            Add New
+          </button>
+        </h3>
+      </div>
+
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+          <li class="breadcrumb-item">
+            <a routerLink="/">Home</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Qualifications
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="app-content">
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- Qualifications Table -->
+      <div
+        id="leftCard"
+        [ngClass]="showForm
+          ? 'col-lg-8 col-md-8 col-sm-12'
+          : 'col-lg-12 col-md-12 col-sm-12'">
+
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table card-table table-vcenter text-nowrap">
+              <thead>
+                <tr>
+                  <th class="w-1">No.</th>
+                  <th>Qualification Name</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr
+                  *ngFor="let item of qualifications; let i = index"
+                  class="align-middle">
+
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.name }}</td>
+
+                  <td>
+                    <span
+                      class="status-icon"
+                      [ngClass]="item.status ? 'bg-success' : 'bg-danger'">
+                    </span>
+                    {{ item.status ? 'Active' : 'Inactive' }}
+                  </td>
+
+                  <td>
+                    <nav class="nav justify-content-center flex-nowrap">
+                      <button
+                        type="button"
+                        class="nav-link badge shadow m-0 text-warning btn btnEdit"
+                        (click)="openEditForm(item)">
+                        <i class="fe fe-edit"></i>
+                      </button>
+
+                      <button
+                        type="button"
+                        class="nav-link badge shadow m-0 text-danger btn btn-delete"
+                        (click)="openDeleteForm(item)">
+                        <i class="fe fe-trash"></i>
+                      </button>
+                    </nav>
+                  </td>
+                </tr>
+
+                <tr *ngIf="qualifications.length === 0">
+                  <td colspan="4" class="text-center text-muted">
+                    No qualifications available.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add / Edit / Delete Form -->
+      <div
+        id="rightCard"
+        class="col-lg-4 col-md-4 col-sm-12"
+        *ngIf="showForm">
+
+        <div class="card card-warning card-outline mb-4">
+          <div class="text-danger px-3 pt-3" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+
+          <form (ngSubmit)="submitForm()">
+            <input
+              type="hidden"
+              name="qualificationId"
+              [(ngModel)]="qualificationId">
+
+            <div class="card-body">
+              <div class="mb-3">
+                <label
+                  for="qualificationName"
+                  class="col-form-label">
+                  Qualification Name
+                </label>
+
+                <input
+                  type="text"
+                  id="qualificationName"
+                  name="qualificationName"
+                  class="form-control"
+                  placeholder="Qualification Name"
+                  [(ngModel)]="qualificationName"
+                  [required]="formMode !== 'delete'"
+                  [readonly]="formMode === 'delete'">
+              </div>
+
+              <div class="form-check mt-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="status"
+                  name="status"
+                  [(ngModel)]="status">
+
+                <label class="form-check-label" for="status">
+                  Is Active
+                </label>
+              </div>
+            </div>
+
+            <div class="card-footer text-center">
+              <button
+                type="submit"
+                class="btn btn-outline-secondary">
+                {{ submitButtonText }}
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-outline-warning"
+                (click)="closeForm()">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

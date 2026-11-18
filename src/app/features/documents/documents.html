@@ -1,0 +1,233 @@
+
+<div class="app-content-header">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-sm-6">
+        <h3 class="page-title">
+          Documents
+          <button
+            *ngIf="!showForm"
+            type="button"
+            class="btn btn-sm btn-primary"
+            (click)="openCreateForm()">
+            Add New
+          </button>
+        </h3>
+      </div>
+
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-end">
+          <li class="breadcrumb-item">
+            <a routerLink="/">Home</a>
+          </li>
+          <li class="breadcrumb-item active">Documents</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="app-content">
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- Documents Table -->
+      <div
+        id="leftCard"
+        [ngClass]="showForm
+          ? 'col-lg-8 col-md-8 col-sm-12'
+          : 'col-lg-12 col-md-12 col-sm-12'">
+
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table card-table table-vcenter text-nowrap">
+              <thead>
+                <tr>
+                  <th class="w-1">No.</th>
+                  <th>Document Name</th>
+                  <th>Is Document<br>Image Required?</th>
+                  <th>Is Document<br>Number Required?</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let item of documents; let i = index"
+                    class="align-middle">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.name }}</td>
+
+                  <td>
+                    <b [ngClass]="item.isDocumentImage ? 'text-success' : 'text-danger'">
+                      <i [class]="item.isDocumentImage ? 'fe fe-check' : 'fe fe-x'"></i>
+                    </b>
+                  </td>
+
+                  <td>
+                    <b [ngClass]="item.isDocumentNumber ? 'text-success' : 'text-danger'">
+                      <i [class]="item.isDocumentNumber ? 'fe fe-check' : 'fe fe-x'"></i>
+                    </b>
+                  </td>
+
+                  <td>
+                    <span
+                      class="status-icon"
+                      [ngClass]="item.status ? 'bg-success' : 'bg-danger'">
+                    </span>
+                    {{ item.status ? 'Active' : 'Inactive' }}
+                  </td>
+
+                  <td>
+                    <nav class="nav justify-content-center flex-nowrap">
+                      <button
+                        type="button"
+                        class="nav-link badge shadow m-0 text-warning btn btnEdit"
+                        (click)="openEditForm(item)">
+                        <i class="fe fe-edit"></i>
+                      </button>
+
+                      <button
+                        type="button"
+                        class="nav-link badge shadow m-0 text-danger btn btn-delete"
+                        (click)="openDeleteModal(item)">
+                        <i class="fe fe-trash"></i>
+                      </button>
+                    </nav>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add / Edit Form -->
+      <div
+        id="rightCard"
+        class="col-lg-4 col-md-4 col-sm-12"
+        *ngIf="showForm">
+
+        <div class="card card-warning card-outline mb-4">
+          <div class="text-danger px-3 pt-3" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+
+          <form (ngSubmit)="saveDocument()">
+            <input type="hidden" name="documentId" [(ngModel)]="documentId">
+
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="documentName" class="col-form-label">
+                  Document Name
+                </label>
+
+                <input
+                  type="text"
+                  id="documentName"
+                  name="documentName"
+                  class="form-control"
+                  placeholder="Document Name"
+                  [(ngModel)]="documentName"
+                  required>
+              </div>
+
+              <div class="form-check mt-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="isDocumentImage"
+                  name="isDocumentImage"
+                  [(ngModel)]="isDocumentImage">
+
+                <label class="form-check-label" for="isDocumentImage">
+                  Is Document Image Required?
+                </label>
+              </div>
+
+              <div class="form-check mt-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="isDocumentNumber"
+                  name="isDocumentNumber"
+                  [(ngModel)]="isDocumentNumber">
+
+                <label class="form-check-label" for="isDocumentNumber">
+                  Is Document Number Required?
+                </label>
+              </div>
+
+              <div class="form-check mt-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="status"
+                  name="status"
+                  [(ngModel)]="status">
+
+                <label class="form-check-label" for="status">
+                  Is Active
+                </label>
+              </div>
+            </div>
+
+            <div class="card-footer text-center">
+              <button type="submit" class="btn btn-outline-secondary">
+                {{ formMode === 'edit' ? 'Update' : 'Save' }}
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-outline-warning"
+                (click)="closeForm()">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div
+  class="document-modal-backdrop"
+  *ngIf="showDeleteModal"
+  (click)="closeDeleteModal()">
+
+  <div
+    class="document-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="deleteTitle"
+    (click)="$event.stopPropagation()">
+
+    <div class="modal-body text-center">
+      <h2 id="deleteTitle">
+        <i class="bi bi-trash icon"></i>
+        Are you sure want to delete ?
+      </h2>
+
+      <blockquote class="my-3 px-3">
+        <p><strong>{{ deleteDisplay }}</strong></p>
+      </blockquote>
+
+      <button
+        type="button"
+        class="main-btn btn btn-warning cancel"
+        (click)="closeDeleteModal()">
+        No
+      </button>
+
+      <button
+        type="button"
+        class="main-btn btn btn-danger"
+        (click)="confirmDelete()">
+        Yes
+      </button>
+    </div>
+  </div>
+</div>

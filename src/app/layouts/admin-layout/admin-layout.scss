@@ -1,0 +1,54 @@
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+
+/* Restore MVC Header and Navigation appearance */
+
+.header {
+  background: #fff !important;
+  border-bottom: 1px solid #e5e9f0 !important;
+}
+
+.profile-button {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.admin-navigation {
+  background: #fff !important;
+  border-bottom: 1px solid #dce2eb !important;
+}
+
+.admin-navigation .nav {
+  background: #fff !important;
+}
+
+.admin-navigation .nav-item {
+  background: transparent !important;
+}
+
+.admin-navigation .nav-link,
+.admin-navigation button.nav-link {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  color: #929eb5 !important;
+  appearance: none;
+}
+
+.admin-navigation .nav-link:hover,
+.admin-navigation button.nav-link:hover {
+  background: #f8f9fb !important;
+  color: #467fcf !important;
+}
+
+/* Remove extra Bootstrap dropdown arrow */
+.admin-navigation .dropdown-toggle::after {
+  display: none !important;
+}

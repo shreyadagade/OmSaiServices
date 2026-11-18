@@ -1,0 +1,118 @@
+
+<div class="roles-page">
+
+  <!-- Page Heading -->
+  <div class="roles-heading">
+    <div class="heading-left">
+      <h2>Roles</h2>
+
+      <button
+        *ngIf="!showForm"
+        type="button"
+        class="add-new-btn"
+        (click)="openCreateForm()">
+        Add New
+      </button>
+    </div>
+
+    <div class="breadcrumb">
+      <a routerLink="/">Home</a>
+      <span>/</span>
+      <span>Roles</span>
+    </div>
+  </div>
+
+  <!-- Table and Form -->
+  <div class="roles-layout" [class.with-form]="showForm">
+
+    <!-- Roles Table -->
+    <div class="roles-card" id="leftCard">
+      <div class="table-responsive">
+        <table class="roles-table">
+          <thead>
+            <tr>
+              <th class="number-column">NO.</th>
+              <th>ROLE NAME</th>
+              <th class="action-column"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let role of roles; let i = index">
+              <td class="number-column">{{ i + 1 }}</td>
+
+              <td class="role-name">{{ role.name }}</td>
+
+              <td class="action-column">
+                <nav class="action-nav">
+                  <button
+                    type="button"
+                    class="action-btn edit-btn"
+                    title="Edit"
+                    (click)="openEditForm(role)">
+                    <i class="fe fe-edit"></i>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="action-btn delete-btn"
+                    title="Delete"
+                    (click)="openDeleteForm(role)">
+                    <i class="fe fe-trash"></i>
+                  </button>
+                </nav>
+              </td>
+            </tr>
+
+            <tr *ngIf="roles.length === 0">
+              <td colspan="3" class="text-center">
+                No roles available.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Add / Edit / Delete Form -->
+    <div
+      class="role-form-card"
+      id="rightCard"
+      *ngIf="showForm">
+
+      <form (ngSubmit)="submitForm()">
+
+        <div class="form-body">
+          <div class="form-group">
+            <label for="roleName">Role Name</label>
+
+            <input
+              type="text"
+              id="roleName"
+              name="roleName"
+              class="form-control"
+              placeholder="Role Name"
+              [(ngModel)]="roleName"
+              [readonly]="formMode === 'delete'"
+              [required]="formMode !== 'delete'">
+          </div>
+        </div>
+
+        <div class="form-footer">
+          <button type="submit" class="save-btn">
+            {{ submitText }}
+          </button>
+
+          <button
+            type="button"
+            class="cancel-btn"
+            (click)="closeForm()">
+            Cancel
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>
