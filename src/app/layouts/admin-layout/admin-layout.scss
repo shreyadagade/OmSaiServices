@@ -4,21 +4,112 @@
   width: 100%;
 }
 
-
-/* Restore MVC Header and Navigation appearance */
-
+/* Header */
 .header {
   background: #fff !important;
   border-bottom: 1px solid #e5e9f0 !important;
 }
 
+/* Profile Button */
 .profile-button {
   background: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
   outline: none !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
+/* Profile Avatar */
+.profile-button .avatar {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  background: #e9ecef;
+  color: #aeb6bf;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-button .avatar i {
+  font-size: 17px;
+}
+
+/* Profile Dropdown - MVC Style */
+.header .dropdown {
+  position: relative;
+}
+
+.header .dropdown-menu-right {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 192px;
+  width: 192px;
+  margin-top: 8px;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #d6deea;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+/* Dropdown Small Arrow */
+.header .dropdown-menu-right::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 30px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #d6deea;
+}
+
+.header .dropdown-menu-right::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  right: 31px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #fff;
+}
+
+/* Sign Outs Item */
+.header .dropdown-menu-right .dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 14px;
+  color: #495057;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  background: #fff;
+  border: 0;
+  cursor: pointer;
+}
+
+.header .dropdown-menu-right .dropdown-item i {
+  font-size: 15px;
+  color: #929eb5;
+}
+
+.header .dropdown-menu-right .dropdown-item:hover {
+  color: #495057;
+  background: #f8f9fa;
+}
+
+.header .dropdown-menu-right .dropdown-item:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Admin Navigation */
 .admin-navigation {
   background: #fff !important;
   border-bottom: 1px solid #dce2eb !important;
@@ -48,7 +139,7 @@
   color: #467fcf !important;
 }
 
-/* Remove extra Bootstrap dropdown arrow */
+/* Remove Extra Bootstrap Dropdown Arrow */
 .admin-navigation .dropdown-toggle::after {
   display: none !important;
 }

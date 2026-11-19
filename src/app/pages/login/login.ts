@@ -1,8 +1,7 @@
-
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 
 import { AuthService } from '../../core/services/auth.service';
@@ -18,110 +17,94 @@ import { LoginResponse } from '../../core/models/login-response.model';
 })
 export class Login {
 
-  email: string = '';
-  password: string = '';
+  email = '';
+  password = '';
 
-  rememberMe: boolean = false;
-  showPassword: boolean = false;
+  rememberMe = false;
+  showPassword = false;
 
-  errorMessage: string = '';
-  successMessage: string = '';
-  isLoading: boolean = false;
+  errorMessage = '';
+  successMessage = '';
+  isLoading = false;
 
   constructor(
-    private authService: AuthService,
-    private router: Router,
-    private cdr: ChangeDetectorRef
+  private authService: AuthService,
+  private router: Router,
+  private cdr: ChangeDetectorRef
   ) {}
 
   onSubmit(): void {
+  this.errorMessage = '';
+  this.successMessage = '';
 
-    this.errorMessage = '';
-    this.successMessage = '';
+  if (!this.email.trim()) {
+    this.errorMessage = 'Please enter your email address.';
+    return;
+  }
 
-    if (!this.email.trim()) {
-      this.errorMessage = 'Please enter your email address.';
-      return;
-    }
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(this.email.trim())) {
+    this.errorMessage = 'Please enter a valid email address.';
+    return;
+  }
 
-    if (!emailPattern.test(this.email.trim())) {
-      this.errorMessage = 'Please enter a valid email address.';
-      return;
-    }
+  if (!this.password) {
+    this.errorMessage = 'Please enter your password.';
+    return;
+  }
 
-    if (!this.password) {
-      this.errorMessage = 'Please enter your password.';
-      return;
-    }
+  const loginRequest: LoginRequest = {
+    email: this.email.trim(),
+    password: this.password
+  };
 
-    const loginRequest: LoginRequest = {
-      email: this.email.trim(),
-      password: this.password
-    };
+  this.isLoading = true;
 
-    this.isLoading = true;
-
-    this.authService.login(loginRequest)
-      .pipe(
-        finalize(() => {
-          this.isLoading = false;
-          this.cdr.detectChanges();
-        })
-      )
-      .subscribe({
-
-        next: (response: LoginResponse) => {
-
-          if (!response?.token) {
-            this.errorMessage =
-              'Login failed. Authentication token not received.';
-            this.cdr.detectChanges();
-            return;
-          }
-
-          sessionStorage.setItem('authToken', response.token);
-          sessionStorage.setItem('userId', response.userId);
-          sessionStorage.setItem('userName', response.userName);
-          sessionStorage.setItem('userEmail', response.email);
-          sessionStorage.setItem(
-            'userRoles',
-            JSON.stringify(response.roles)
-          );
-
-          this.successMessage = 'Login successful!';
-
-          this.router.navigateByUrl('/dashboard').then(
-          (success) => {
-          console.log('Dashboard navigation:', success);
-          },
-          (error) => {
-            console.error('Dashboard navigation error:', error);
-          }
-        );
-        },
-
-        error: (error) => {
-
-          if (error.status === 401) {
-            this.errorMessage = 'Invalid email or password.';
-          }
-          else if (error.status === 0) {
-            this.errorMessage =
-              'Unable to connect to server. Please try again.';
-          }
-          else {
-            this.errorMessage =
-              error.error?.message ||
-              'Login failed. Please try again.';
-          }
-
-          console.error('Login error:', error);
-
-          this.cdr.detectChanges();
+  this.authService.login(loginRequest)
+    .pipe(
+      finalize(() => {
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    })
+    )
+    .subscribe({
+      next: (response: LoginResponse) => {
+        if (!response || !response.token) {
+          this.errorMessage = 'Login failed. Authentication token not received.';
+          return;
         }
 
-      });
-  }
+        sessionStorage.clear();
+
+        sessionStorage.setItem('authToken', response.token);
+        sessionStorage.setItem('userId', response.userId);
+        sessionStorage.setItem('userName', response.userName);
+        sessionStorage.setItem('userEmail', response.email);
+        sessionStorage.setItem('userRoles', JSON.stringify(response.roles));
+        sessionStorage.setItem('expiresAt', response.expiresAt);
+
+        this.successMessage = 'Login successful!';
+        this.router.navigateByUrl('/dashboard');
+      },
+
+      error: (error) => {
+        console.log('Login error handler executed:', error);
+        console.log('Status:', error.status);
+        console.log('Response:', error.error);
+
+        if (error.status === 401 || error.status === 400) {
+          this.errorMessage =
+          error.error?.message || 'Invalid email or password.';
+        } else if (error.status === 0) {
+        this.errorMessage = 'Unable to connect to server. Please try again.';
+        } else {
+        this.errorMessage =
+        error.error?.message || 'Login failed. Please try again.';
+      }
+
+       this.cdr.detectChanges();
+    }
+  });
+}
 }

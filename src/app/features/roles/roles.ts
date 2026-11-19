@@ -1,114 +1,11 @@
 
-// import { Component } from '@angular/core';
-// import { CommonModule } from '@angular/common';
-// import { FormsModule } from '@angular/forms';
-// import { RouterLink } from '@angular/router';
-
-// interface Role {
-//   id: number;
-//   name: string;
-// }
-
-// @Component({
-//   selector: 'app-roles',
-//   standalone: true,
-//   imports: [CommonModule, FormsModule, RouterLink],
-//   templateUrl: './roles.html',
-//   styleUrl: './roles.scss'
-// })
-// export class Roles {
-
-//   roles: Role[] = [
-//     { id: 1, name: 'Field Officer' },
-//     { id: 2, name: 'NITIN WAGHMARE' },
-//     { id: 3, name: 'Manager' },
-//     { id: 4, name: 'MD' },
-//     { id: 5, name: 'Superviser' },
-//     { id: 6, name: 'Staff' },
-//     { id: 7, name: 'Manager_1' },
-//     { id: 8, name: 'Administrator' },
-//     { id: 9, name: 'Manager_2' }
-//   ];
-
-//   showForm = false;
-//   isEditMode = false;
-
-//   roleId: number | null = null;
-//   roleName = '';
-
-//   private nextId = 10;
-
-//   // Add New
-//   openAddForm(): void {
-//     this.showForm = true;
-//     this.isEditMode = false;
-//     this.roleId = null;
-//     this.roleName = '';
-//   }
-
-//   // Edit
-//   editRole(role: Role): void {
-//     this.showForm = true;
-//     this.isEditMode = true;
-//     this.roleId = role.id;
-//     this.roleName = role.name;
-//   }
-
-//   // Save
-//   saveRole(): void {
-//     const name = this.roleName.trim();
-
-//     if (!name) {
-//       return;
-//     }
-
-//     if (this.isEditMode && this.roleId !== null) {
-//       const role = this.roles.find(r => r.id === this.roleId);
-
-//       if (role) {
-//         role.name = name;
-//       }
-//     } else {
-//       this.roles.push({
-//         id: this.nextId++,
-//         name: name
-//       });
-//     }
-
-//     this.closeForm();
-//   }
-
-//   // Cancel
-//   closeForm(): void {
-//     this.showForm = false;
-//     this.isEditMode = false;
-//     this.roleId = null;
-//     this.roleName = '';
-//   }
-
-//   // Delete
-//   deleteRole(role: Role): void {
-//     const confirmed = window.confirm(
-//       `Are you sure you want to delete ${role.name}?`
-//     );
-
-//     if (confirmed) {
-//       this.roles = this.roles.filter(r => r.id !== role.id);
-//     }
-//   }
-// }
-
-
-
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
-interface Role {
-  id: string;
-  name: string;
-}
+import { Role, RoleRequest } from '../../core/models/role.model';
+import { RoleService } from '../../core/services/role.service';
 
 type FormMode = 'create' | 'edit' | 'delete';
 
@@ -119,7 +16,9 @@ type FormMode = 'create' | 'edit' | 'delete';
   templateUrl: './roles.html',
   styleUrl: './roles.scss'
 })
-export class Roles {
+
+export class Roles implements OnInit {
+
   roles: Role[] = [];
 
   showForm = false;
@@ -127,7 +26,18 @@ export class Roles {
 
   roleId = '';
   roleName = '';
+
   errorMessage = '';
+  successMessage = '';
+
+  isLoading = false;
+  isSubmitting = false;
+
+  constructor(private roleService: RoleService) {}
+
+  ngOnInit(): void {
+    this.loadRoles();
+  }
 
   get submitText(): string {
     if (this.formMode === 'edit') return 'Update';
@@ -135,61 +45,156 @@ export class Roles {
     return 'Save';
   }
 
+  // GET ALL ROLES
+  loadRoles(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    this.roleService.getAllRoles().subscribe({
+      next: (response) => {
+        this.roles = response || [];
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Get Roles Error:', error);
+        this.errorMessage =
+          error.error?.message || 'Unable to load roles.';
+        this.isLoading = false;
+      }
+    });
+  }
+
+  // ADD NEW
   openCreateForm(): void {
     this.formMode = 'create';
     this.roleId = '';
     this.roleName = '';
     this.errorMessage = '';
+    this.successMessage = '';
     this.showForm = true;
   }
 
+  // EDIT
   openEditForm(role: Role): void {
     this.formMode = 'edit';
     this.roleId = role.id;
     this.roleName = role.name;
     this.errorMessage = '';
+    this.successMessage = '';
     this.showForm = true;
+
+    this.roleService.getRoleById(role.id).subscribe({
+      next: (response) => {
+        this.roleName = response.name;
+      },
+      error: (error) => {
+        console.error('Get Role By ID Error:', error);
+        this.errorMessage =
+          error.error?.message || 'Unable to load role details.';
+      }
+    });
   }
 
+  // DELETE FORM
   openDeleteForm(role: Role): void {
     this.formMode = 'delete';
     this.roleId = role.id;
     this.roleName = role.name;
     this.errorMessage = '';
+    this.successMessage = '';
     this.showForm = true;
   }
 
+  // CLOSE FORM
   closeForm(): void {
     this.showForm = false;
     this.roleId = '';
     this.roleName = '';
     this.errorMessage = '';
+    this.successMessage = '';
   }
 
+  // CREATE / UPDATE / DELETE
   submitForm(): void {
+
+    if (this.isSubmitting) return;
+
     if (this.formMode !== 'delete' && !this.roleName.trim()) {
       this.errorMessage = 'Role name cannot be empty.';
       return;
     }
 
+    this.errorMessage = '';
+    this.successMessage = '';
+    this.isSubmitting = true;
+
+    const request: RoleRequest = {
+      name: this.roleName.trim()
+    };
+
     if (this.formMode === 'create') {
-      this.roles.push({
-        id: crypto.randomUUID(),
-        name: this.roleName.trim()
+
+      this.roleService.createRole(request).subscribe({
+        next: (response) => {
+          this.successMessage = 'Role created successfully.';
+          this.finishOperation();
+        },
+        error: (error) => {
+          this.handleApiError(error, 'Unable to create role.');
+        }
+      });
+
+    } else if (this.formMode === 'edit') {
+
+      this.roleService.updateRole(this.roleId, request).subscribe({
+        next: (response) => {
+          this.successMessage = 'Role updated successfully.';
+          this.finishOperation();
+        },
+        error: (error) => {
+          this.handleApiError(error, 'Unable to update role.');
+        }
+      });
+
+    } else if (this.formMode === 'delete') {
+
+      this.roleService.deleteRole(this.roleId).subscribe({
+        next: () => {
+          this.successMessage = 'Role deleted successfully.';
+          this.finishOperation();
+        },
+        error: (error) => {
+          this.handleApiError(error, 'Unable to delete role.');
+        }
       });
     }
+  }
 
-    if (this.formMode === 'edit') {
-      const role = this.roles.find(item => item.id === this.roleId);
-      if (role) {
-        role.name = this.roleName.trim();
-      }
+  // SUCCESS HANDLING
+  private finishOperation(): void {
+    this.isSubmitting = false;
+    this.showForm = false;
+    this.roleId = '';
+    this.roleName = '';
+
+    this.loadRoles();
+  }
+
+  // ERROR HANDLING
+  private handleApiError(error: any, defaultMessage: string): void {
+    console.error('Role API Error:', error);
+
+    if (error.status === 403) {
+      this.errorMessage =
+        'Access denied. You do not have permission to perform this action.';
+    } else if (error.status === 401) {
+      this.errorMessage =
+        'Session expired. Please login again.';
+    } else {
+      this.errorMessage =
+        error.error?.message || defaultMessage;
     }
 
-    if (this.formMode === 'delete') {
-      this.roles = this.roles.filter(item => item.id !== this.roleId);
-    }
-
-    this.closeForm();
+    this.isSubmitting = false;
   }
 }

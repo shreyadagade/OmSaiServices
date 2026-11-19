@@ -22,6 +22,21 @@
     </div>
   </div>
 
+  <!-- API Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- API Success Message -->
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+  <!-- Loading Message -->
+  <div *ngIf="isLoading" class="text-center py-3">
+    Loading roles...
+  </div>
+
   <!-- Table and Form -->
   <div class="roles-layout" [class.with-form]="showForm">
 
@@ -29,6 +44,7 @@
     <div class="roles-card" id="leftCard">
       <div class="table-responsive">
         <table class="roles-table">
+
           <thead>
             <tr>
               <th class="number-column">NO.</th>
@@ -45,30 +61,38 @@
 
               <td class="action-column">
                 <nav class="action-nav">
+
+                  <!-- Edit Button -->
                   <button
                     type="button"
                     class="action-btn edit-btn"
                     title="Edit"
-                    (click)="openEditForm(role)">
+                    (click)="openEditForm(role)"
+                    [disabled]="isSubmitting">
                     <i class="fe fe-edit"></i>
                   </button>
 
+                  <!-- Delete Button -->
                   <button
                     type="button"
                     class="action-btn delete-btn"
                     title="Delete"
-                    (click)="openDeleteForm(role)">
+                    (click)="openDeleteForm(role)"
+                    [disabled]="isSubmitting">
                     <i class="fe fe-trash"></i>
                   </button>
+
                 </nav>
               </td>
             </tr>
 
-            <tr *ngIf="roles.length === 0">
+            <!-- Empty Roles -->
+            <tr *ngIf="!isLoading && roles.length === 0">
               <td colspan="3" class="text-center">
                 No roles available.
               </td>
             </tr>
+
           </tbody>
         </table>
       </div>
@@ -83,6 +107,7 @@
       <form (ngSubmit)="submitForm()">
 
         <div class="form-body">
+
           <div class="form-group">
             <label for="roleName">Role Name</label>
 
@@ -93,22 +118,33 @@
               class="form-control"
               placeholder="Role Name"
               [(ngModel)]="roleName"
-              [readonly]="formMode === 'delete'"
+              [readonly]="formMode === 'delete' || isSubmitting"
               [required]="formMode !== 'delete'">
           </div>
+
         </div>
 
         <div class="form-footer">
-          <button type="submit" class="save-btn">
-            {{ submitText }}
+
+          <!-- Save / Update / Delete -->
+          <button
+            type="submit"
+            class="save-btn"
+            [disabled]="isSubmitting">
+
+            {{ isSubmitting ? 'Please wait...' : submitText }}
+
           </button>
 
+          <!-- Cancel -->
           <button
             type="button"
             class="cancel-btn"
-            (click)="closeForm()">
+            (click)="closeForm()"
+            [disabled]="isSubmitting">
             Cancel
           </button>
+
         </div>
 
       </form>
