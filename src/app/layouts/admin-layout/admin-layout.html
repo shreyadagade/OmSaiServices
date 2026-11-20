@@ -99,11 +99,11 @@
               class="dropdown-menu"
               [class.show]="activeDropdown === 'configuration'"
             >
-              <a class="dropdown-item" routerLink="/admin/role">Roles</a>
-              <a class="dropdown-item" href="#">Documents</a>
-              <a class="dropdown-item" href="#">Departments</a>
-              <a class="dropdown-item" href="#">Qualification</a>
-              <a class="dropdown-item" href="#">Assets</a>
+              <a class="dropdown-item" routerLink="/admin/role" (click)="closeDropdown()">Roles</a>
+              <a class="dropdown-item" href="/admin/Documents" (click)="closeDropdown()">Documents</a>
+              <a class="dropdown-item" href="/admin/Departments" (click)="closeDropdown()">Departments</a>
+              <a class="dropdown-item" href="/admin/Qualification" (click)="closeDropdown()">Qualification</a>
+              <a class="dropdown-item" href="/admin/Assets" (click)="closeDropdown()">Assets</a>
             </div>
           </li>
 
@@ -121,9 +121,9 @@
               class="dropdown-menu"
               [class.show]="activeDropdown === 'projects'"
             >
-              <a class="dropdown-item" href="#">Projects</a>
-              <a class="dropdown-item" href="#">Sites</a>
-              <a class="dropdown-item" href="#">Site Shifts</a>
+              <a class="dropdown-item" href="#" (click)="closeDropdown()">Projects</a>
+              <a class="dropdown-item" href="#" (click)="closeDropdown()">Sites</a>
+              <a class="dropdown-item" href="#" (click)="closeDropdown()">Site Shifts</a>
             </div>
           </li>
 
@@ -162,9 +162,9 @@
               class="dropdown-menu"
               [class.show]="activeDropdown === 'attendance'"
             >
-              <a class="dropdown-item" href="#">Leave Requests</a>
-              <a class="dropdown-item" href="#">Attendance Log</a>
-              <a class="dropdown-item" href="#">Attendance Ledger</a>
+              <a class="dropdown-item" href="#" (click)="closeDropdown()">Leave Requests</a>
+              <a class="dropdown-item" href="#" (click)="closeDropdown()">Attendance Log</a>
+              <a class="dropdown-item" href="#" (click)="closeDropdown()">Attendance Ledger</a>
             </div>
           </li>
 
@@ -182,8 +182,8 @@
               class="dropdown-menu"
               [class.show]="activeDropdown === 'salary'"
             >
-              <a class="dropdown-item" href="#">Configure Salary</a>
-              <a class="dropdown-item" href="#">Monthly Salary</a>
+              <a class="dropdown-item" href="#" (click)="closeDropdown()">Configure Salary</a>
+              <a class="dropdown-item" href="#" (click)="closeDropdown()">Monthly Salary</a>
             </div>
           </li>
 
@@ -201,10 +201,10 @@
               class="dropdown-menu"
               [class.show]="activeDropdown === 'billing'"
             >
-              <a class="dropdown-item" href="#">Company Details</a>
-              <a class="dropdown-item" href="#">Customer/Client</a>
-              <a class="dropdown-item" href="#">Services</a>
-              <a class="dropdown-item" href="#">Invoices</a>
+              <a class="dropdown-item" href="#" (click)="closeDropdown()">Company Details</a>
+              <a class="dropdown-item" href="#" (click)="closeDropdown()">Customer/Client</a>
+              <a class="dropdown-item" href="#" (click)="closeDropdown()">Services</a>
+              <a class="dropdown-item" href="#" (click)="closeDropdown()">Invoices</a>
             </div>
           </li>
 

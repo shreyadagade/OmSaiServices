@@ -12,6 +12,7 @@ import { LogoutService } from '../../core/services/logout.service';
   templateUrl: './admin-layout.html',
   styleUrl: './admin-layout.scss'
 })
+
 export class AdminLayout {
 
   userName = sessionStorage.getItem('userName') || 'Admin';
@@ -55,6 +56,11 @@ export class AdminLayout {
       this.activeDropdown === name ? '' : name;
   }
 
+  // ADDED: Close dropdown when submenu is clicked
+  closeDropdown(): void {
+    this.activeDropdown = '';
+  }
+
   logout(): void {
     if (this.isLoggingOut) return;
 
@@ -77,4 +83,6 @@ export class AdminLayout {
     this.isLoggingOut = false;
     this.router.navigateByUrl('/account/login');
   }
+
+  
 }

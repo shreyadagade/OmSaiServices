@@ -1,6 +1,6 @@
 
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
@@ -33,7 +33,7 @@ export class Roles implements OnInit {
   isLoading = false;
   isSubmitting = false;
 
-  constructor(private roleService: RoleService) {}
+  constructor(private roleService: RoleService,private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.loadRoles();
@@ -47,22 +47,24 @@ export class Roles implements OnInit {
 
   // GET ALL ROLES
   loadRoles(): void {
-    this.isLoading = true;
-    this.errorMessage = '';
+  this.isLoading = true;
+  this.errorMessage = '';
 
-    this.roleService.getAllRoles().subscribe({
-      next: (response) => {
-        this.roles = response || [];
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error('Get Roles Error:', error);
-        this.errorMessage =
-          error.error?.message || 'Unable to load roles.';
-        this.isLoading = false;
-      }
-    });
-  }
+  this.roleService.getAllRoles().subscribe({
+    next: response => {
+      this.roles = response || [];
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    },
+    error: error => {
+      console.error('Error loading roles:', error);
+      this.errorMessage =
+        error.error?.message || 'Unable to load roles.';
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    }
+  });
+}
 
   // ADD NEW
   openCreateForm(): void {
